@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Betting Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            text-align: center;
+            color: white;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: #ff6f61;
+            border-radius: 10px;
+        }
+        .wallet {
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            background: #ffcc00;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #ffd633;
+        }
+        .numbers {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .number {
+            background: #4CAF50;
+            padding: 15px;
+            border-radius: 50%;
+            font-size: 20px;
+            color: white;
+            border: 2px solid white;
+        }
+        .bet-options {
+            margin: 20px 0;
+        }
+        .big, .small {
+            border: 2px solid white;
+        }
+        .big { background: #ff4081; }
+        .small { background: #2196F3; }
+        .timer {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .history table {
+            width: 100%;
+            margin-top: 10px;
+            border-collapse: collapse;
+        }
+        .history th, .history td {
+            padding: 10px;
+            border: 1px solid white;
+        }
+        .green { color: lightgreen; }
+        .red { color: red; }
+        .dot {
+            width: 10px;
+            height: 10px;
+            display: inline-block;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+        .dot.green { background: lightgreen; }
+        .dot.red { background: red; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>DiuWin</h1>
+            <div class="wallet">
+                <span>Wallet Balance: <strong>₹0.00</strong></span>
+                <button class="withdraw">Withdraw</button>
+                <button class="deposit" onclick="window.location.href='deposit.html'">Deposit</button>
+            </div>
+        </header>
+
+        <section class="betting-area">
+            <div class="numbers">
+                <button class="number">0</button>
+                <button class="number">1</button>
+                <button class="number">2</button>
+                <button class="number">3</button>
+                <button class="number">4</button>
+                <button class="number">5</button>
+                <button class="number">6</button>
+                <button class="number">7</button>
+                <button class="number">8</button>
+                <button class="number">9</button>
+            </div>
+            <div class="bet-options">
+                <button class="big">Big</button>
+                <button class="small">Small</button>
+            </div>
+            <div class="timer">Time Remaining: <span id="countdown">15</span></div>
+        </section>
+
+        <section class="history">
+            <h2>Game History</h2>
+            <table>
+                <tr>
+                    <th>Period</th>
+                    <th>Number</th>
+                    <th>Big/Small</th>
+                    <th>Color</th>
+                </tr>
+                <tbody id="history-body">
+                </tbody>
+            </table>
+        </section>
+    </div>
+    
+    <script>
+        let countdown = 15;
+        let period = 20250217100051840;
+
+        function updateCountdown() {
+            document.getElementById("countdown").innerText = countdown;
+            if (countdown === 0) {
+                startNewPeriod();
+            } else {
+                countdown--;
+            }
+        }
+
+        function startNewPeriod() {
+            countdown = 15;
+            period++;
+            let randomNumber = Math.floor(Math.random() * 10);
+            let isBig = randomNumber >= 5 ? "Big" : "Small";
+            let colorClass = randomNumber % 2 === 0 ? "red" : "green";
+
+            let newRow = `<tr>
+                            <td>${period}</td>
+                            <td class="number ${colorClass}">${randomNumber}</td>
+                            <td>${isBig}</td>
+                            <td class="dot ${colorClass}"></td>
+                          </tr>`;
+            document.getElementById("history-body").innerHTML = newRow + document.getElementById("history-body").innerHTML;
+        }
+
+        setInterval(updateCountdown, 1000);
+
+        document.querySelectorAll("button:not(.deposit)").forEach(button => {
+            button.addEventListener("click", function() {
+                alert("Deposit money first to play");
+            });
+        });
+    </script>
+</body>
+</html>

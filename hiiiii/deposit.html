@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deposit Money</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            text-align: center;
+            color: white;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .amount-buttons button {
+            background: #ffcc00;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .amount-buttons button:hover {
+            background: #ffd633;
+        }
+        .utr-input {
+            display: none;
+            margin-top: 20px;
+        }
+        input {
+            padding: 10px;
+            width: 80%;
+            border-radius: 5px;
+            border: none;
+            text-align: center;
+        }
+        .submit-utr {
+            margin-top: 10px;
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .submit-utr:hover {
+            background: #ff6666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Deposit Money</h1>
+        <img src="images/qr-code.png" alt="Scan to Pay" style="width: 200px; height: 200px; margin-bottom: 10px;">
+        <p>Select an amount to deposit:</p>
+        <div class="amount-buttons">
+            <button onclick="selectAmount(100)">₹100</button>
+            <button onclick="selectAmount(200)">₹200</button>
+            <button onclick="selectAmount(300)">₹300</button>
+            <button onclick="selectAmount(400)">₹400</button>
+            <button onclick="selectAmount(500)">₹500</button>
+            <button onclick="selectAmount(1000)">₹1000</button>
+        </div>
+        
+        <div class="utr-input" id="utr-section">
+            <p>Enter your UTR number:</p>
+            <input type="text" id="utr" placeholder="Enter UTR number">
+            <button class="submit-utr" onclick="submitUTR()">Submit</button>
+        </div>
+    </div>
+    
+    <script>
+        function selectAmount(amount) {
+            alert("You have selected ₹" + amount + ". Complete the payment and enter UTR number.");
+            document.getElementById("utr-section").style.display = "block";
+        }
+
+        function submitUTR() {
+            let utr = document.getElementById("utr").value;
+            if (utr.trim() === "") {
+                alert("Please enter a valid UTR number");
+            } else {
+                alert("Transaction Unsuccessful");
+            }
+        }
+    </script>
+</body>
+</html>
